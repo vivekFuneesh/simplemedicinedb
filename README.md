@@ -13,7 +13,7 @@ here, this phone is the unique identifier of the person whose prescriptions are 
 Post request over path /add/ requires a person object (in default-supported-forms like json, xml, etc.)... eg.  <br>
 <br>
 {<br>
-<br> "
+
 <br> "phone":1234567890, /**this is phone number of 10  digits, must be sent.*/
 <br> "name":"patient (monty)", /**this is name of person, must be sent*/
  <br>"prescribed_medicines": [ /**This is list of prescribed medicines*/
