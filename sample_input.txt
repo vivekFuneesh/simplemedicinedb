@@ -1,0 +1,25 @@
+{
+    
+   
+   "phone":9871237654,
+   "name":" Monty", 
+    "prescribed_medicines": [
+        
+        {       
+            "dosage_amount": 1,
+            "timings": "before sleep",
+            "md":{
+                
+               "name":"covid Medicine",
+
+            	"mfg_By":"Vivek Co. Ltd.",
+	
+                "mktd_By":"PaxCom Pvt. Ltd.",
+	
+            	"chemicals":"Unknowm",
+    
+                "any_other_note":" Magic"
+            }
+        }
+    ]
+}
