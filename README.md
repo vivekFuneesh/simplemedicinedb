@@ -33,4 +33,4 @@ Post request over path /add/ requires a person object (in default-supported-form
  ]<br>
 }<br>
 <br>
-Above is explanation of all fields.... To use a sample look at sample_input.txt file.
+Above is explanation of all fields.... To use a sample, look at sample_input.txt file.
