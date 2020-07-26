@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Medicine Prescription Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Hello World! Welcome to Vivek's Medicine Prescription DEMO.</h1>
+
+<form action="add">
+<input type="text" name="a"/><br>
+<input type="text" name="b"/><br>
+<input type="submit" value="ADD">
+</form>
+
+<form th:action="@{/prescriptions}">
+<input type="number" name="person_id"/><br>
+<input type="submit" value="Show Prescriptions List">
+</form>
+
+
+
+</body>
+</html>
