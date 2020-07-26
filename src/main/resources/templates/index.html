@@ -4,17 +4,40 @@
     <title>Medicine Prescription Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
 <h1>Hello World! Welcome to Vivek's Medicine Prescription DEMO.</h1>
 
-<form action="add">
-<input type="text" name="a"/><br>
-<input type="text" name="b"/><br>
-<input type="submit" value="ADD">
-</form>
+ <!-- 
+<form action="/add/" method="post">
 
+<p>Patient Name:<input type="text" name="name"/><br>
+</p>
+
+<p>Phone Number:<input type="text" name="phone"/><br>
+</p>
+
+<p>Medicine dose:<input type="number" name="prescribed_medicines.x.dosage_amount"/><br>
+</p>
+
+<p>Medicine timings:<input type="text" name="prescribed_medicines.x.timings"/><br>
+</p>
+
+<p>Medicine name:<input type="text" name="prescribed_medicines.x.md.name"/><br>
+</p>
+
+
+<br>
+<input type="submit" value="ADD"/>
+
+ </form>
+-->
+
+
+<br><br>
+<p>Please Enter 10 digit Phone number of Patient to see prescriptions list.</p>
 <form th:action="@{/prescriptions}">
-<input type="number" name="person_id"/><br>
+<input type="text" name="phone"/><br>
 <input type="submit" value="Show Prescriptions List">
 </form>
 

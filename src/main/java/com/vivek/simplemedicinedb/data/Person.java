@@ -1,7 +1,6 @@
 package com.vivek.simplemedicinedb.data;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;

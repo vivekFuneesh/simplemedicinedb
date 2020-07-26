@@ -12,7 +12,7 @@ public class MedicineData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private Integer id;
 	
 	@NotBlank
 	@Column(nullable = false)

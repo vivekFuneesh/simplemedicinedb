@@ -1,14 +1,16 @@
 package com.vivek.simplemedicinedb.service;
 
 import java.util.Iterator;
-import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vivek.simplemedicinedb.data.MedicineData;
 import com.vivek.simplemedicinedb.data.Person;
 import com.vivek.simplemedicinedb.data.PrescribedMedicine;
+import com.vivek.simplemedicinedb.dto.PersonDto;
+import com.vivek.simplemedicinedb.glitches.MedicineDataIncompleteException;
 import com.vivek.simplemedicinedb.repository.MedicineDataRepo;
 import com.vivek.simplemedicinedb.repository.PersonRepo;
 import com.vivek.simplemedicinedb.repository.PrescribedMedicineRepo;
@@ -34,7 +36,7 @@ public class Serve{
 	 *   ::::::Currently doing both i.e. increased payload and increased service headache.::::
 	 */
 
-	public Person addUpdatePrescription(Person p) {
+	public PersonDto addUpdatePrescription(PersonDto p) {
 
 		/**
 		System.out.println("\n\n------LENGTH:: "+p.getPhone().length()+" ::"+p.getPhone()+"::");
@@ -43,42 +45,52 @@ public class Serve{
 				+p.getPrescribed_medicines().iterator().next().getMd().getId()+" "
 				+p.getId()+" "
 				+p.getPrescribed_medicines().iterator().next().getId());
-		*/
+		 */
+
+		Person p1=pr.getPersonByPhone(p.getPhone());
+
+		ModelMapper mm=new ModelMapper();
+		Person preq=mm.map(p, Person.class);
+
+		if(p1!=null) {
+			p1.setName(preq.getName());
+			p1.getPrescribed_medicines().clear();			
+		}	
 		
-		Iterator<PrescribedMedicine> itr= p.getPrescribed_medicines().iterator();
+		Iterator<PrescribedMedicine> itr=preq.getPrescribed_medicines().iterator();
+
 		while(itr.hasNext()) {
+			PrescribedMedicine pm= itr.next();
+			MedicineData md=pm.getMd(), tmp;
 
-			//check whether medicine data exist or not...
-			//if not exist -> save 
-			//else fetch and use that.
-			PrescribedMedicine pm	=	itr.next();
-			checkMedicineDataRedundance(pm);
-		}
-		return p=pr.save(p);
-	}
-
-	private PrescribedMedicine checkMedicineDataRedundance(PrescribedMedicine pm) {
-		MedicineData md	=	pm.getMd();
-		Integer md_id	= 	md.getId();
-		if(md_id!=null) {
-			md	=	mdr.findById(md_id).orElse(md);
-		}
-		pm.setMd(md);
-		return pm;
-	}
-
-
-	public List<PrescribedMedicine> getPrescriptions(int person_id){
-		List<PrescribedMedicine> list = pmr.getAllByPersonId(person_id);
-
-		if(list.size()>0) {
-			for(int i=0;i<list.size();i++) {
-				MedicineData md	=	mdr.findById(list.get(i).getMd().getId()).orElse(null);//else throw exception
-
-				list.get(i).setMd(md);
+			if(md.getMfg_By()!=null && md.getMktd_By()!=null)
+				tmp=mdr.findTopByNameAndMfg_ByAndMktd_By(md.getName(), md.getMfg_By(), md.getMktd_By());
+			else if(md.getMfg_By()!=null)
+				tmp=mdr.findTopByNameAndMfg_By(md.getName(), md.getMfg_By());
+			else if(md.getMktd_By()!=null)
+				tmp=mdr.findTopByNameAndMktd_By(md.getName(), md.getMktd_By());
+			else tmp=mdr.findByName(md.getName());
+			if(tmp!=null) {
+				md=tmp;
 			}
+			//System.out.println(tmp+" tmp found in database.."+tmp.getName()+" "+tmp.getMfg_By()+" "+tmp.getMktd_By());}
+			else if(md.getMfg_By()==null || md.getMktd_By()==null)
+				throw new MedicineDataIncompleteException(md.getName());
+			pm.setMd(md);
+			if(p1!=null)p1.getPrescribed_medicines().add(pm);
 		}
-		return list;
+		
+		if(p1!=null)preq=p1;
+		
+		return mm.map(pr.save(preq), PersonDto.class);
+	}
+
+	
+	public PersonDto getPrescriptions(String phone){
+		Person p=pr.getPersonByPhone(phone);
+		PersonDto pdto=null;
+		if(p!=null)pdto=new ModelMapper().map(p, PersonDto.class);
+		return pdto;
 	}
 
 }
