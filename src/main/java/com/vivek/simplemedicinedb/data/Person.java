@@ -1,6 +1,8 @@
 package com.vivek.simplemedicinedb.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,7 +44,7 @@ public class Person implements Serializable{
 	@OneToMany(targetEntity = PrescribedMedicine.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL )
 	@JoinColumn(name="pm_pfk", referencedColumnName = "id")
 	@NotNull(message = "List must not be null or empty")
-	private Set<@NotNull(message = "entry in list must not ne null or empty") PrescribedMedicine> prescribed_medicines ;
+	private List<@NotNull(message = "entry in list must not ne null or empty") PrescribedMedicine> prescribed_medicines ;
 
 	public Person() {}
 
@@ -53,7 +55,7 @@ public class Person implements Serializable{
 	} 
 
 	
-	public Person(String name, String phone, Set<PrescribedMedicine> prescribed_medicines) {
+	public Person(String name, String phone, ArrayList<PrescribedMedicine> prescribed_medicines) {
 		super();
 		this.name = name;
 		this.phone = phone;
@@ -76,11 +78,11 @@ public class Person implements Serializable{
 		this.phone = phone;
 	}
 
-	public Set<PrescribedMedicine> getPrescribed_medicines() {
+	public List<PrescribedMedicine> getPrescribed_medicines() {
 		return prescribed_medicines;
 	}
 
-	public void setPrescribed_medicines(Set<PrescribedMedicine> prescribed_medicines) {
+	public void setPrescribed_medicines(List<PrescribedMedicine> prescribed_medicines) {
 		this.prescribed_medicines = prescribed_medicines;
 	}
 

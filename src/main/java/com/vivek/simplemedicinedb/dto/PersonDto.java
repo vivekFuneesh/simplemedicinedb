@@ -1,5 +1,7 @@
 package com.vivek.simplemedicinedb.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -14,11 +16,11 @@ public class PersonDto {
 	private String name;
 	
 	@NotBlank(message="phone must not be blank or null")
-	@Size(min=10, max=10, message="phone must not be blank or null")
+	@Size(min=10, max=10, message="phone number length must be 10")
 	private String phone;
 	
 	@NotNull(message="prescriptions list must not be null")
-	private Set<@Valid PrescribedMedicineDto> prescribed_medicines ;
+	private List<@Valid PrescribedMedicineDto> prescribed_medicines ;
 
 	
 	public String getName() {
@@ -37,11 +39,11 @@ public class PersonDto {
 		this.phone = phone;
 	}
 
-	public Set<PrescribedMedicineDto> getPrescribed_medicines() {
+	public List<PrescribedMedicineDto> getPrescribed_medicines() {
 		return prescribed_medicines;
 	}
 
-	public void setPrescribed_medicines(Set<PrescribedMedicineDto> prescribed_medicines) {
+	public void setPrescribed_medicines(List<PrescribedMedicineDto> prescribed_medicines) {
 		this.prescribed_medicines = prescribed_medicines;
 	}
 
