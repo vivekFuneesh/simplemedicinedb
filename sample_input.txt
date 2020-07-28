@@ -14,7 +14,7 @@
 
             	"mfg_By":"Vivek Co. Ltd.",
 	
-                "mktd_By":"PaxCom Pvt. Ltd.",
+                "mktd_By":"Processcom med Pvt. Ltd.",
 	
             	"chemicals":"Unknowm",
     
