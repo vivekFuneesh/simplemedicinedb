@@ -39,7 +39,7 @@ public class Serve{
 	public PersonDto addUpdatePrescription(PersonDto p) {
 
 		for(int i=0;i<p.getPrescribed_medicines().size();i++) {
-			if(p.getPrescribed_medicines().get(i).getDosage_amount()==-1) {
+			if(p.getPrescribed_medicines().get(i).getDosage_amount() <= 0) {
 				p.getPrescribed_medicines().remove(i);i--;
 			}
 		}
@@ -62,20 +62,25 @@ public class Serve{
 			PrescribedMedicine pm= itr.next();
 			MedicineData md=pm.getMd(), tmp;
 
-			if(md.getMfg_By()!=null && md.getMktd_By()!=null)
+			if( !isBlank(md.getMfg_By()) && !isBlank(md.getMktd_By()) )
 				tmp=mdr.findTopByNameAndMfg_ByAndMktd_By(md.getName(), md.getMfg_By(), md.getMktd_By());
-			else if(md.getMfg_By()!=null)
+		
+			else if( !isBlank(md.getMfg_By()) )
 				tmp=mdr.findTopByNameAndMfg_By(md.getName(), md.getMfg_By());
-			else if(md.getMktd_By()!=null)
+			
+			else if( !isBlank(md.getMktd_By()) )
 				tmp=mdr.findTopByNameAndMktd_By(md.getName(), md.getMktd_By());
+			
 			else tmp=mdr.findByName(md.getName());
 			//System.out.println(tmp+" tmp found in database.");
 			//	System.out.println(tmp+" tmp found in database.."+tmp.getName()+" "+tmp.getMfg_By()+" "+tmp.getMktd_By());
+			
 			if(tmp!=null) {
 				md=tmp;
 			}
-			else if (md.getMfg_By()==null || md.getMktd_By()==null || md.getMfg_By().trim()=="" || md.getMktd_By().trim()=="")
+			else if ( isBlank(md.getMfg_By()) || isBlank(md.getMktd_By()) )
 				throw new MedicineDataIncompleteException(md.getName());
+			
 			pm.setMd(md); 
 			if(p1!=null)p1.getPrescribed_medicines().add(pm);
 		}
@@ -85,6 +90,10 @@ public class Serve{
 		return mm.map(pr.save(preq), PersonDto.class);
 	}
 
+	private boolean isBlank(String str) {
+		if( str==null || "".equals(str.trim()) )return true;
+		return false;
+	}
 
 	public PersonDto getPrescriptions(String phone){
 		Person p=pr.getPersonByPhone(phone);

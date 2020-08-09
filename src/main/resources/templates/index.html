@@ -1,97 +1,159 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Medicine Prescription Demo</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Medicine Prescription Demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 
 <body>
-<h1>Hello World! Welcome to Vivek's Medicine Prescription DEMO.</h1>
+	<h1>Hello World! Welcome to Vivek's Medicine Prescription DEMO.</h1>
 
 
-  
-  <form action="/add/" 	method="post">
-  
-  <p>Name:<input type="text" name="name"> 
-  Phone:<input type="text" name="phone"></p>
- <br>
-  <p><b> Medicine 1:</b><br> 
-  		dose<input type="number" name="prescribed_medicines[0].dosage_amount" value="-1">
-  		timings<input type="text" name="prescribed_medicines[0].timings">
-  </p>
-  <p> name<input type="text" name="prescribed_medicines[0].md.name">
-  	  mfg_by<input type="text" name="prescribed_medicines[0].md.mfg_By">
-   </p>
-   <p>
-   	  mktd_by<input type="text" name="prescribed_medicines[0].md.mktd_By">
-  	  chemicals<input type="text" name="prescribed_medicines[0].md.chemicals">
-   </p>
-   	  NOTE<input type="text" name="prescribed_medicines[0].md.any_other_note">
-  
-    
-   <br>
-  <p><b> Medicine 2:</b><br> 
-  		dose<input type="number" name="prescribed_medicines[1].dosage_amount" value="-1">
-  		timings<input type="text" name="prescribed_medicines[1].timings" value="morning">
-  </p>
-  <p> name<input type="text" name="prescribed_medicines[1].md.name" value="defaultValue">
-  	  mfg_by<input type="text" name="prescribed_medicines[1].md.mfg_By" value="Vivek M.">
-   </p>
-   <p>
-   	  mktd_by<input type="text" name="prescribed_medicines[1].md.mktd_By" value="Vendor1">
-  	  chemicals<input type="text" name="prescribed_medicines[1].md.chemicals" value="chemical1">
-   </p>
-   	  NOTE<input type="text" name="prescribed_medicines[1].md.any_other_note">
-  
-  
-   <br>
-  <p><b> Medicine 3:</b><br> 
-  		dose<input type="number" name="prescribed_medicines[2].dosage_amount" value="-1">
-  		timings<input type="text" name="prescribed_medicines[2].timings" value="Default 2">
-  </p>
-  <p> name<input type="text" name="prescribed_medicines[2].md.name" value="Default 2">
-  	  mfg_by<input type="text" name="prescribed_medicines[2].md.mfg_By" value="Default 2">
-   </p>
-   <p>
-   	  mktd_by<input type="text" name="prescribed_medicines[2].md.mktd_By" value="Default 2">
-  	  chemicals<input type="text" name="prescribed_medicines[2].md.chemicals" value="Default 2">
-   </p>
-   	  NOTE<input type="text" name="prescribed_medicines[2].md.any_other_note" value="Default 2">
-  
-  
-   <br>
-  <p><b> Medicine 4:</b><br> 
-  		dose<input type="number" name="prescribed_medicines[3].dosage_amount" value="-1">
-  		timings<input type="text" name="prescribed_medicines[3].timings" value="Default 3">
-  </p>
-  <p> name<input type="text" name="prescribed_medicines[3].md.name" value="Default 3">
-  	  mfg_by<input type="text" name="prescribed_medicines[3].md.mfg_By" value="Default 3">
-   </p>
-   <p>
-   	  mktd_by<input type="text" name="prescribed_medicines[3].md.mktd_By" value="Default 3">
-  	  chemicals<input type="text" name="prescribed_medicines[3].md.chemicals" value="Default 3">
-   </p>
-   	  NOTE<input type="text" name="prescribed_medicines[3].md.any_other_note" value="Default 3">
-  
-  
-  
-  
-  
-  <p><input type="submit" value="SUBMIT" ></p>
-  
-  </form>
-  
+	<br>
+	<br>
+	<p>
+		<b>Please Enter 10 digit Phone number of Patient to see
+			prescriptions list.</b>
+	</p>
+	<form th:action="@{/view/prescriptions}">
+		<input type="text" name="phone" /><br> <input type="submit"
+			value="Show Prescriptions List">
+	</form>
 
+<div th:if="${personPresc?.prescribed_medicines}"> 
+<fieldset>
+	<table>
+	<thead>
+	<tr>
+	<th>Person Name:</th>
+	<th>Phone Number:</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+	<td><input th:value="${personPresc.name}" readonly></td>
+	<td><input th:value="${personPresc.phone}" readonly></td>
+	</tr>
+	</tbody>
+	</table>
+	</fieldset>
+	
+	<fieldset>
+	<table>
+	<thead>
+	<tr>
+						<th>Sr. No.</th>
+						<th>Dosage Amount</th>
+						<th>Timings Note</th>
+						<th>Name</th>
+						<th>Manufactured By</th>
+						<th>Marketed By</th>
+						<th>Chemical Composition</th>
+						<th>Any Other Note</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr th:each="med, itemStat : ${personPresc.prescribed_medicines}">
+						<td><input th:value="${itemStat.count}" readonly></td>
 
+						<td><input th:value="${med.dosage_amount}"></td>
 
-<br><br>
-<p><b>Please Enter 10 digit Phone number of Patient to see prescriptions list.</b></p>
-<form th:action="@{/prescriptions}">
-<input type="text" name="phone"/><br>
-<input type="submit" value="Show Prescriptions List">
-</form>
+						<td><input th:value="${med.timings}"></td>
 
+						<td><input th:value="${med.md.name}"></td>
 
+						<td><input th:value="${med.md.mfg_By}"></td>
 
+						<td><input th:value="${med.md.mktd_By}"></td>
+
+						<td><input th:value="${med.md.chemicals}"></td>
+
+						<td><input th:value="${med.md.any_other_note}"></td>
+					
+	</tr>
+	
+	</tbody>
+	</table>
+	</fieldset>
+</div>
+
+	<br>
+	<br>
+	
+	
+	
+<div th:if="${person?.prescribed_medicines}">
+	<p><b>Prescribe Medicines to patient:</b></p>
+	
+	<form action="#" th:action="@{/view/add/}" th:object="${person}" 
+		method="post">
+
+		<p>
+			Patient Name:<input type="text" th:field="*{name}"> Phone:<input
+				type="text" th:field="*{phone}">
+		</p>
+
+		<fieldset>
+			<b> Medicine:</b><br>
+			<table>
+				<thead>
+					<tr>
+						<th>Sr. No.</th>
+						<th>Dosage Amount</th>
+						<th>Timings Note</th>
+						<th>Name</th>
+						<th>Manufactured By</th>
+						<th>Marketed By</th>
+						<th>Chemical Composition</th>
+						<th>Any Other Note</th>
+						<th><input type="submit"
+							th:formaction="@{/deletePrescribedMedicineRow}" th:value="remove">
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="med, itemStat : ${person.prescribed_medicines}">
+						<td th:text="${itemStat.count}"></td>
+
+						<td><input type="number" th:value="${med.dosage_amount}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].dosage_amount}">
+						</td>
+
+						<td><input type="text" th:value="${med.timings}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].timings}">
+						</td>
+
+						<td><input type="text" th:value="${med.md.name}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].md.name}">
+						</td>
+
+						<td><input type="text" th:value="${med.md.mfg_By}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].md.mfg_By}"></td>
+
+						<td><input type="text" th:value="${med.md.mktd_By}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].md.mktd_By}"></td>
+
+						<td><input type="text" th:value="${med.md.chemicals}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].md.chemicals}">
+						</td>
+
+						<td><input type="text" th:value="${med.md.any_other_note}"
+							th:field="*{prescribed_medicines[__${itemStat.index}__].md.any_other_note}">
+						</td>
+
+						<td><input type="radio" th:id="${itemStat.index}"
+							name="delete" th:value="${itemStat.index}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				<input type="submit" th:value="Add_Another_Medicine"
+					th:formaction="@{/addPrescribedMedicineRow}"> <input
+					type="submit" th:value="SUBMIT">
+			</p>
+		</fieldset>
+
+	</form>
+</div>
 </body>
 </html>
