@@ -28,7 +28,7 @@ Phone number will act as unique identifier and must be of length 10 only.<br>
 
             	"mfg_By":"Vivek Co. Ltd.",
 	
-                "mktd_By":"PathCom Pvt. Ltd.",
+                "mktd_By":"Processcom med Pvt. Ltd.",
 	
             	"chemicals":"Unknowm",
     
