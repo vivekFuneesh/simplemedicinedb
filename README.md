@@ -3,10 +3,12 @@
 				Under GPL v3 License
 ::End points are::
 
-    @PostMapping("/add/")
+    @PostMapping("/rest/add/")
     
-   	@GetMapping("/prescriptions")
+   	@GetMapping("/rest/prescriptions")
   
+Above are rest end points.
+For get end point, "/view/prescriptions" can also be used by client views.
 Get request over path /prescriptions?phone=  
 here, this phone is the unique identifier of the person whose prescriptions are to be retrieved.
   <br>
